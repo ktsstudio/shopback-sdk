@@ -39,10 +39,6 @@ jobs:
 
     - name: Publish
       env:
-        POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
-        TTT: ${{ secrets.PYPI_TOKEN.TTT }}
-        ACTIONS_RUNNER_DEBUG: true
+        POETRY_PYPI_TOKEN_PYPI: ${{ secrets.POETRY_PYPI_TOKEN_PYPI }}
       run: |
-        echo $POETRY_PYPI_TOKEN_PYPI
-        echo $TTT
         poetry publish --build
