@@ -1,10 +1,10 @@
-import os
-from dataclasses import dataclass, field
 from typing import Optional
 
-import requests
+import os
+from dataclasses import dataclass, field
 
-from gql import gql, Client
+import requests
+from gql import Client, gql
 from gql.transport.requests import RequestsHTTPTransport
 
 
@@ -55,9 +55,7 @@ class OldClientSDK:
     def __init__(self, session_id: str, url: Optional[str] = None) -> None:
         self.url = url or self.DEFAULT_URL
         self.session_id = session_id
-        t = RequestsHTTPTransport(
-            self.graphql_url, headers=self.session_cookies
-        )
+        t = RequestsHTTPTransport(self.graphql_url, headers=self.session_cookies)
         self.client = Client(transport=t, fetch_schema_from_transport=True)
 
     @property
@@ -75,12 +73,9 @@ class OldClientSDK:
     def upload_files(self, paths: list[str]) -> list[int]:
         res = []
         files = [
-            ("file", (os.path.basename(item), open(item, mode="rb"), "image/*"))
-            for item in paths
+            ("file", (os.path.basename(item), open(item, mode="rb"), "image/*")) for item in paths
         ]
-        response = requests.post(
-            self.upload_url, headers=self.session_cookies, files=files
-        )
+        response = requests.post(self.upload_url, headers=self.session_cookies, files=files)
         if response.status_code == 200:
             data = response.json()["data"]
             res += [item["aid"] for item in data]
@@ -95,9 +90,7 @@ class OldClientSDK:
                 continue
             name = url.split("/")[-1]
             files = [("file", (name, r.content, "image/*"))]
-            response = requests.post(
-                self.upload_url, headers=self.session_cookies, files=files
-            )
+            response = requests.post(self.upload_url, headers=self.session_cookies, files=files)
             if response.status_code == 200:
                 data = response.json()["data"]
                 res += [item["aid"] for item in data]
@@ -252,9 +245,7 @@ class OldClientSDK:
             "project": str(category.project_id),
             "name": category.name,
             "externalId": category.external_id,
-            "attachment": str(category.attachment)
-            if category.attachment
-            else "",
+            "attachment": str(category.attachment) if category.attachment else "",
             "parentExternalId": category.parent_external_id or "",
         }
         result = self.client.execute(query, variable_values=params)
