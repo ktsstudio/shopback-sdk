@@ -1,4 +1,4 @@
-name: build
+name: build-publish
 
 on: [push, pull_request]
 
@@ -36,3 +36,9 @@ jobs:
     - name: Run tests
       run: |
         make test
+
+    - name: Publish
+      env:
+        POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+      run: |
+        poetry publish --build
