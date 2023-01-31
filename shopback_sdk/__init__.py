@@ -1,5 +1,4 @@
-# type: ignore[attr-defined]
-"""shopback.ru - no code shop constructor and cafe for telegram"""
+"""shopback.ru - no code shop constructor and caffe for telegram"""
 
 import sys
 from importlib import metadata as importlib_metadata
