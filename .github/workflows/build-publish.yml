@@ -41,6 +41,7 @@ jobs:
       env:
         POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
         TTT: ${{ secrets.PYPI_TOKEN.TTT }}
+        ACTIONS_RUNNER_DEBUG: true
       run: |
         echo $POETRY_PYPI_TOKEN_PYPI
         echo $TTT
