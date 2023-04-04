@@ -32,10 +32,13 @@ class CategoryData:
 class ClientSDK:
     DEFAULT_URL = "https://shopback-prod.ru-prod2.kts.studio"
 
-    def __init__(self, session_id: str, url: Optional[str] = None) -> None:
+    def __init__(
+        self, shopback_token: str, shopback_project: str, url: Optional[str] = None
+    ) -> None:
         self.url = url or self.DEFAULT_URL
-        self.session_id = session_id
-        t = RequestsHTTPTransport(self.graphql_url, headers=self.session_cookies)
+        self.shopback_token = shopback_token
+        self.shopback_project = shopback_project
+        t = RequestsHTTPTransport(self.graphql_url, headers=self.session_headers)
         self.client = Client(transport=t, fetch_schema_from_transport=True)
 
     @property
@@ -47,15 +50,18 @@ class ClientSDK:
         return self.graphql_url + "/attachment/upload"
 
     @property
-    def session_cookies(self) -> dict:
-        return {"Cookie": f"sessionid={self.session_id}"}
+    def session_headers(self) -> dict:
+        return {
+            "X-Shopback-Token": self.shopback_token,
+            "X-Shopback-Project": self.shopback_project,
+        }
 
     def upload_files(self, paths: list[str]) -> list[int]:
         res = []
         files = [
             ("file", (os.path.basename(item), open(item, mode="rb"), "image/*")) for item in paths
         ]
-        response = requests.post(self.upload_url, headers=self.session_cookies, files=files)
+        response = requests.post(self.upload_url, headers=self.session_headers, files=files)
         if response.status_code == 200:
             data = response.json()["data"]
             res += [item["aid"] for item in data]
@@ -70,7 +76,7 @@ class ClientSDK:
                 continue
             name = url.split("/")[-1]
             files = [("file", (name, r.content, "image/*"))]
-            response = requests.post(self.upload_url, headers=self.session_cookies, files=files)
+            response = requests.post(self.upload_url, headers=self.session_headers, files=files)
             if response.status_code == 200:
                 data = response.json()["data"]
                 res += [item["aid"] for item in data]
