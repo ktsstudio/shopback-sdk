@@ -25,6 +25,7 @@ class CategoryData:
     project_id: int
     name: str
     external_id: str
+    is_visible: bool = True
     attachment: Optional[int] = None
     parent_external_id: Optional[int] = None
 
@@ -137,6 +138,7 @@ class ClientSDK:
                 $project: String!,
                 $name: String,
                 $externalId: String!,
+                $isVisible: Boolean,
                 $attachment: String,
                 $parentExternalId: String
             ) {
@@ -144,6 +146,7 @@ class ClientSDK:
                 project: $project,
                 name: $name,
                 externalId: $externalId,
+                isVisible: $isVisible,
                 attachment: $attachment,
                 parentExternalId: $parentExternalId
               }) {
@@ -159,6 +162,7 @@ class ClientSDK:
             "project": str(category.project_id),
             "name": category.name,
             "externalId": category.external_id,
+            "isVisible": category.is_visible,
             "attachment": str(category.attachment) if category.attachment else "",
             "parentExternalId": category.parent_external_id or "",
         }

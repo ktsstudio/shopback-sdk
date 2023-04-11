@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Build status](https://github.com/ktsstudio/shopback-sdk/workflows/build/badge.svg?branch=master&event=push)](https://github.com/ktsstudio/shopback-sdk/actions?query=workflow%3Abuild)
+[![Build status](https://github.com/ktsstudio/shopback-sdk/actions/workflows/build-publish.yml/badge.svg?event=push)](https://github.com/ktsstudio/shopback-sdk/actions/workflows/build-publish.yml)
 [![Python Version](https://img.shields.io/pypi/pyversions/shopback-sdk.svg)](https://pypi.org/project/shopback-sdk/)
 [![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)](https://github.com/ktsstudio/shopback-sdk/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
 
