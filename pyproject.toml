@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "shopback-sdk"
-version = "0.1.3b"
+version = "0.1.4b"
 description = "shopback.ru - no code shop constructor and cafe for telegram"
 readme = "README.md"
 authors = ["ktsstudio <hello@ktsstudio.com>"]
