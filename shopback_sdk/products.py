@@ -18,6 +18,7 @@ class ProductData:
     attachment_ids: list[int]
     external_id: Optional[str] = None
     category_external_id: Optional[str] = None
+    count: Optional[int] = None
 
 
 @dataclass
@@ -94,6 +95,7 @@ class ClientSDK:
               $name: String!,
               $description: String!,
               $price: Decimal!,
+              $count: Int,
               $attachments: [Int]!
             ) {
               product(input: {
@@ -104,6 +106,7 @@ class ClientSDK:
                 price: $price,
                 categoryName: $categoryName,
                 categoryExternalId: $categoryExternalId,
+                count: $count,
                 attachments: $attachments}
               ) {
                 data {id},
@@ -121,6 +124,7 @@ class ClientSDK:
             "categoryName": product.category_name,
             "categoryExternalId": product.category_external_id,
             "attachments": product.attachment_ids,
+            "count": product.count,
         }
         result = self.client.execute(query, variable_values=params)
         return result
